@@ -1,0 +1,14 @@
+/*-- This is store vairables of colors so we can useit again and again */
+:root{
+
+    --bg-body : #161827;
+    --card-navy : #1d2048;
+    --gold : #e3b94f;
+    --lavender : #b3a5f5;
+    --text-main : #ffffff;
+    --text-soft : #c3c8e6;
+
+      /* One shared background for every banner so they match */
+  --banner-bg: radial-gradient(ellipse at 72% 50%, #252b6e 0%, #181e4e 50%, #11163a 100%);
+  --banner-border: #303a85;
+}

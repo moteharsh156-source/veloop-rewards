@@ -1,0 +1,57 @@
+.cta {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  height: 52px;
+  min-width: 196px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  cursor: pointer;
+  text-decoration: none;
+  background: linear-gradient(180deg, #efca62, #d9a93c);
+  color: #161827;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cta:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(227, 185, 79, 0.28); }
+.cta:active { transform: translateY(0); }
+.cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+
+.arrow { transition: transform 0.2s; }
+.cta:hover .arrow { transform: translateX(3px); }
+
+/* ---- pill ---- */
+.pill { border-radius: 999px; padding: 0 8px 0 24px; gap: 16px; }
+.labelPill { white-space: nowrap; }
+.iconPill {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #161827;
+  color: #efca62;
+}
+
+/* ---- block ---- */
+.block { border-radius: 12px; }
+.iconBlock {
+  width: 48px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #161827;
+  color: #efca62;
+  border-right: 2px solid #efca62;
+}
+.labelBlock { flex: 1; padding: 0 20px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cta, .arrow { transition: none; }
+}
