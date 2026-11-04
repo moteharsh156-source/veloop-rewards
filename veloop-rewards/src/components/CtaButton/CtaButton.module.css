@@ -38,6 +38,9 @@
   color: #efca62;
 }
 
+/* ---- rect ---- */
+.rect { border-radius: 10px; padding: 0 20px; gap: 10px; }
+
 /* ---- block ---- */
 .block { border-radius: 12px; }
 .iconBlock {

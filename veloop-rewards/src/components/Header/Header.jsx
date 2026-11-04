@@ -10,6 +10,7 @@ const NOTIFICATION_COUNT = 3;
 const NAV_ITEMS = [
   { to: '/captcha-tasks', label: 'Captcha Tasks' },
   { to: '/bonus-ves', label: 'Bonus VEs' },
+  { to: '/swap-center', label: 'Swap Center' },
 ];
 
 export default function Header() {

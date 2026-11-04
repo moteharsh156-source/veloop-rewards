@@ -1,0 +1,151 @@
+/* ---------- Card (desktop: 410-450px tall) ---------- */
+.card {
+  width: 100%;
+  min-height: 410px;
+  max-height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* illustration sits at the right edge */
+  gap: 24px;
+  padding: 0 56px;
+  border-radius: 24px;
+  border: 1px solid var(--banner-border);
+  background: var(--banner-bg);
+  overflow: hidden;
+}
+
+.content {
+  flex: 0 1 440px;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.heading {
+  margin: 0;
+  font-weight: 800;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.08;
+  color: #fff;
+}
+.accent {
+  color: #e8bd5a; /* fallback */
+  background: linear-gradient(180deg, #f7dc8f, #d9a93c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rule { display: flex; align-items: center; }
+.ruleLine { width: 130px; height: 2px; background: linear-gradient(90deg, #e3b94f, rgba(227, 185, 79, 0)); }
+
+.text {
+  margin: 0;
+  max-width: 360px;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #c3c8e6;
+}
+
+.status { margin: 0; min-height: 20px; font-size: 13px; line-height: 20px; color: #aeb4dc; }
+
+/* ---------- Right side: illustration + working swap button ---------- */
+.visual {
+  flex: 0 1 480px;
+  min-width: 0;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.art {
+  position: relative;
+  width: 100%;
+  max-width: 470px;
+  aspect-ratio: 420 / 340;
+}
+.svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* the two cards trade places when flipped */
+.cardVE, .cardSVE { transition: transform 0.6s ease; }
+.art[data-flipped='true'] .cardVE { transform: translateX(230px); }
+.art[data-flipped='true'] .cardSVE { transform: translateX(-230px); }
+
+.swapBtn {
+  position: absolute;
+  left: 42.5%;
+  top: 37.8%;
+  width: 15%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 2px solid #8fb0ff;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #3d57e0, #1a2a86);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 0 6px rgba(111, 141, 255, 0.15), 0 8px 24px rgba(79, 107, 255, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.swapBtn::after { content: ''; position: absolute; inset: -6px; } /* bigger touch area */
+.swapBtn:hover { transform: scale(1.06); box-shadow: 0 0 0 8px rgba(111, 141, 255, 0.2), 0 10px 28px rgba(79, 107, 255, 0.45); }
+.swapBtn:active { transform: scale(0.97); }
+.swapBtn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.swapIcon { transition: transform 0.6s ease; }
+.art[data-flipped='true'] .swapIcon { transform: rotate(180deg); }
+
+/* ---------- Animations ---------- */
+.flow { opacity: 0.25; animation: flowPulse 1.8s ease-in-out infinite; }
+.flowD0 { animation-delay: 0s; }
+.flowD1 { animation-delay: 0.2s; }
+.flowD2 { animation-delay: 0.4s; }
+@keyframes flowPulse {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+.float { animation: floatY 4s ease-in-out infinite; }
+.floatA { animation-delay: 0s; }
+.floatB { animation-delay: -1.3s; }
+.floatC { animation-delay: -2.6s; }
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow { animation: none; opacity: 1; }
+  .float { animation: none; }
+  .cardVE, .cardSVE, .swapIcon, .swapBtn { transition: none; }
+}
+
+/* ---------- Tablet (380-540px tall) ---------- */
+@media (max-width: 991px) {
+  .card { min-height: 380px; max-height: 540px; padding: 0 28px; gap: 16px; }
+  .visual { flex-basis: 380px; height: 300px; }
+}
+
+/* ---------- Mobile (330-520px tall) ---------- */
+@media (max-width: 767px) {
+  .card {
+    min-height: 330px;
+    max-height: 520px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px 20px 18px;
+  }
+  .content { flex: none; width: 100%; min-width: 0; gap: 8px; }
+  .heading { font-size: 28px; }
+  .rule { display: none; }
+  .text { font-size: 13px; line-height: 1.4; }
+  .status { font-size: 12px; }
+
+  .visual { order: -1; flex: none; width: 100%; height: auto; justify-content: center; }
+  .art { max-width: 320px; }
+}
