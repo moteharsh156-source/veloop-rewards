@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { to: '/captcha-tasks', label: 'Captcha Tasks' },
   { to: '/bonus-ves', label: 'Bonus VEs' },
   { to: '/swap-center', label: 'Swap Center' },
+  { to: '/exchange-center', label: 'Exchange Center' },
 ];
 
 export default function Header() {

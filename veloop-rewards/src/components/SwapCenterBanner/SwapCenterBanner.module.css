@@ -1,21 +1,41 @@
-/* ---------- Card (desktop: 410-450px tall) ---------- */
+/* ---------- Banner card (desktop height 430px, range 410-450) ---------- */
 .card {
+  position: relative;
+  isolation: isolate;
   width: 100%;
-  min-height: 410px;
-  max-height: 450px;
+  height: 430px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* illustration sits at the right edge */
+  justify-content: space-between; /* artwork sits at the right edge */
   gap: 24px;
-  padding: 0 56px;
-  border-radius: 24px;
+  padding: 0 24px 0 56px;
+  border-radius: 28px;
   border: 1px solid var(--banner-border);
-  background: var(--banner-bg);
+  background:
+    radial-gradient(ellipse 46% 85% at 76% 52%, rgba(79, 107, 255, 0.30) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 60% at 52% 50%, rgba(240, 194, 79, 0.10) 0%, transparent 70%),
+    var(--banner-base);
+  box-shadow: var(--banner-shadow);
   overflow: hidden;
+}
+/* fine dot texture, fades out towards the artwork */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(100deg, #000 0%, transparent 55%);
+  mask-image: linear-gradient(100deg, #000 0%, transparent 55%);
 }
 
 .content {
-  flex: 0 1 440px;
+  position: relative;
+  z-index: 1;
+  flex: 1 1 460px;
+  max-width: 520px;
   min-width: 260px;
   display: flex;
   flex-direction: column;
@@ -26,13 +46,25 @@
 .heading {
   margin: 0;
   font-weight: 800;
-  font-size: clamp(32px, 4vw, 52px);
-  line-height: 1.08;
+  font-size: clamp(32px, 3.8vw, 52px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
   color: #fff;
 }
+
+.text {
+  margin: 0;
+  max-width: 400px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: #c3c8e6;
+}
+
+.status { margin: 0; min-height: 20px; font-size: 13px; line-height: 20px; color: #aeb4dc; }
+
 .accent {
   color: #e8bd5a; /* fallback */
-  background: linear-gradient(180deg, #f7dc8f, #d9a93c);
+  background: linear-gradient(180deg, #f9e19a, #d9a93c);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -40,35 +72,21 @@
 
 .rule { display: flex; align-items: center; }
 .ruleLine { width: 130px; height: 2px; background: linear-gradient(90deg, #e3b94f, rgba(227, 185, 79, 0)); }
+.text { max-width: 360px; }
 
-.text {
-  margin: 0;
-  max-width: 360px;
-  font-size: 16px;
-  line-height: 1.55;
-  color: #c3c8e6;
-}
-
-.status { margin: 0; min-height: 20px; font-size: 13px; line-height: 20px; color: #aeb4dc; }
-
-/* ---------- Right side: illustration + working swap button ---------- */
+/* ---------- Right side: artwork + working swap button ---------- */
 .visual {
-  flex: 0 1 480px;
+  position: relative;
+  z-index: 1;
+  flex: 0 1 520px;
   min-width: 0;
-  height: 380px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
-.art {
-  position: relative;
-  width: 100%;
-  max-width: 470px;
-  aspect-ratio: 420 / 340;
-}
-.svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.art { position: relative; width: 100%; max-width: 520px; aspect-ratio: 420 / 340; }
+.svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
 
-/* the two cards trade places when flipped */
 .cardVE, .cardSVE { transition: transform 0.6s ease; }
 .art[data-flipped='true'] .cardVE { transform: translateX(230px); }
 .art[data-flipped='true'] .cardSVE { transform: translateX(-230px); }
@@ -83,38 +101,37 @@
   align-items: center;
   justify-content: center;
   padding: 0;
-  border: 2px solid #8fb0ff;
+  border: 2px solid #9db8ff;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #3d57e0, #1a2a86);
+  background: radial-gradient(circle at 35% 30%, #4a63ec, #16237f);
   color: #fff;
   cursor: pointer;
-  box-shadow: 0 0 0 6px rgba(111, 141, 255, 0.15), 0 8px 24px rgba(79, 107, 255, 0.35);
+  box-shadow: 0 0 0 6px rgba(111, 141, 255, 0.16), 0 0 30px rgba(79, 107, 255, 0.55);
   transition: transform 0.2s, box-shadow 0.2s;
 }
-.swapBtn::after { content: ''; position: absolute; inset: -6px; } /* bigger touch area */
-.swapBtn:hover { transform: scale(1.06); box-shadow: 0 0 0 8px rgba(111, 141, 255, 0.2), 0 10px 28px rgba(79, 107, 255, 0.45); }
+.swapBtn::after { content: ''; position: absolute; inset: -6px; }
+.swapBtn:hover { transform: scale(1.06); box-shadow: 0 0 0 8px rgba(111, 141, 255, 0.22), 0 0 38px rgba(79, 107, 255, 0.7); }
 .swapBtn:active { transform: scale(0.97); }
 .swapBtn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
 .swapIcon { transition: transform 0.6s ease; }
 .art[data-flipped='true'] .swapIcon { transform: rotate(180deg); }
 
-/* ---------- Animations ---------- */
-.flow { opacity: 0.25; animation: flowPulse 1.8s ease-in-out infinite; }
-.flowD0 { animation-delay: 0s; }
-.flowD1 { animation-delay: 0.2s; }
-.flowD2 { animation-delay: 0.4s; }
-@keyframes flowPulse {
-  0%, 100% { opacity: 0.25; }
-  50% { opacity: 1; }
-}
-
+/* ---------- Animation ---------- */
 .float { animation: floatY 4s ease-in-out infinite; }
 .floatA { animation-delay: 0s; }
 .floatB { animation-delay: -1.3s; }
 .floatC { animation-delay: -2.6s; }
 @keyframes floatY {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-9px); }
+}
+.flow { opacity: 0.3; animation: flowPulse 1.8s ease-in-out infinite; }
+.flowD0 { animation-delay: 0s; }
+.flowD1 { animation-delay: 0.2s; }
+.flowD2 { animation-delay: 0.4s; }
+@keyframes flowPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -125,13 +142,20 @@
 
 /* ---------- Tablet (380-540px tall) ---------- */
 @media (max-width: 991px) {
-  .card { min-height: 380px; max-height: 540px; padding: 0 28px; gap: 16px; }
-  .visual { flex-basis: 380px; height: 300px; }
+  .card {
+    height: auto;
+    min-height: 380px;
+    max-height: 540px;
+    padding: 28px 24px 28px 32px;
+    gap: 16px;
+  }
+  .visual { flex-basis: 400px; }
 }
 
 /* ---------- Mobile (330-520px tall) ---------- */
 @media (max-width: 767px) {
   .card {
+    height: auto;
     min-height: 330px;
     max-height: 520px;
     flex-direction: column;
@@ -139,13 +163,13 @@
     justify-content: center;
     gap: 8px;
     padding: 16px 20px 18px;
+    border-radius: 22px;
   }
   .content { flex: none; width: 100%; min-width: 0; gap: 8px; }
   .heading { font-size: 28px; }
-  .rule { display: none; }
   .text { font-size: 13px; line-height: 1.4; }
   .status { font-size: 12px; }
-
-  .visual { order: -1; flex: none; width: 100%; height: auto; justify-content: center; }
+  .rule { display: none; }
+  .visual { order: -1; flex: none; width: 100%; justify-content: center; }
   .art { max-width: 320px; }
 }

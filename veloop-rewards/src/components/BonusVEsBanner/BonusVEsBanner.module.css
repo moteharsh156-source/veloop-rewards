@@ -1,38 +1,70 @@
-/* ---------- Card (desktop: 410-450px tall) ---------- */
+/* ---------- Banner card (desktop height 430px, range 410-450) ---------- */
 .card {
+  position: relative;
+  isolation: isolate;
   width: 100%;
-  min-height: 410px;
-  max-height: 450px;
+  height: 430px;
   display: flex;
   align-items: center;
-  justify-content: space-between; /* illustration sits at the right edge */
+  justify-content: space-between; /* artwork sits at the right edge */
   gap: 24px;
-  padding: 0 56px;
-  border-radius: 24px;
+  padding: 0 24px 0 56px;
+  border-radius: 28px;
   border: 1px solid var(--banner-border);
-  background: var(--banner-bg);
+  background:
+    radial-gradient(ellipse 36% 70% at 82% 62%, rgba(240, 194, 79, 0.20) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 80% at 58% 40%, rgba(91, 123, 255, 0.24) 0%, transparent 70%),
+    var(--banner-base);
+  box-shadow: var(--banner-shadow);
   overflow: hidden;
+}
+/* fine dot texture, fades out towards the artwork */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: linear-gradient(100deg, #000 0%, transparent 55%);
+  mask-image: linear-gradient(100deg, #000 0%, transparent 55%);
 }
 
 .content {
-  flex: 0 1 440px;
+  position: relative;
+  z-index: 1;
+  flex: 1 1 460px;
+  max-width: 520px;
   min-width: 260px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 14px;
+  gap: 16px;
 }
 
 .heading {
   margin: 0;
   font-weight: 800;
-  font-size: clamp(32px, 4vw, 52px);
-  line-height: 1.08;
+  font-size: clamp(32px, 3.8vw, 52px);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
   color: #fff;
 }
+
+.text {
+  margin: 0;
+  max-width: 400px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: #c3c8e6;
+}
+
+.status { margin: 0; min-height: 20px; font-size: 13px; line-height: 20px; color: #aeb4dc; }
+
 .accent {
   color: #e8bd5a; /* fallback */
-  background: linear-gradient(180deg, #f7dc8f, #d9a93c);
+  background: linear-gradient(180deg, #f9e19a, #d9a93c);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -42,20 +74,12 @@
 .ruleLine { width: 110px; height: 2px; background: linear-gradient(90deg, #e3b94f, rgba(227, 185, 79, 0)); }
 .ruleDots { color: #e3b94f; font-weight: 800; font-size: 13px; letter-spacing: 1px; }
 
-.text {
-  margin: 0;
-  max-width: 400px;
-  font-size: 16px;
-  line-height: 1.55;
-  color: #c3c8e6;
-}
-
 .ctaRow { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
 .counter {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  height: 36px;
+  height: 38px;
   padding: 0 14px;
   border: 1px solid rgba(240, 203, 111, 0.45);
   border-radius: 999px;
@@ -66,58 +90,55 @@
   font-variant-numeric: tabular-nums;
 }
 
-.status { margin: 0; min-height: 20px; font-size: 13px; line-height: 20px; color: #aeb4dc; }
-
-/* ---------- Right side: activities + illustration ---------- */
+/* ---------- Right side: activities + artwork ---------- */
 .visual {
-  flex: 0 1 634px;
+  position: relative;
+  z-index: 1;
+  flex: 0 1 700px;
   min-width: 0;
-  height: 380px;
+  height: 100%;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 12px;
 }
-
-.activities {
-  flex: 0 0 clamp(170px, 32%, 220px);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+.activities { flex: 0 0 clamp(180px, 32%, 236px); display: flex; flex-direction: column; gap: 12px; }
 
 .activity {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #2f3a85;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
+  padding: 10px 11px;
+  border: 1px solid rgba(143, 160, 255, 0.28);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 10px 24px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
   color: #fff;
   font-family: inherit;
   text-align: left;
   cursor: pointer;
   transition: transform 0.2s, border-color 0.2s, background 0.2s;
 }
-.activity:hover { transform: translateY(-1px); border-color: rgba(240, 203, 111, 0.55); background: rgba(255, 255, 255, 0.07); }
+.activity:hover { transform: translateY(-1px); border-color: rgba(240, 203, 111, 0.6); }
 .activity:active { transform: translateY(0); }
 .activity:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
-.activity.done { border-color: #5b6df0; background: rgba(91, 109, 240, 0.14); }
+.activity.done { border-color: #6b7df5; background: linear-gradient(180deg, rgba(91, 109, 240, 0.22), rgba(91, 109, 240, 0.06)); }
 
 .iconBox {
   flex: none;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 9px;
-  background: #262e70;
-  color: #a9b6ff;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #2f3993, #202877);
+  color: #b4c0ff;
 }
 .activityText { flex: 1; min-width: 0; display: flex; flex-direction: column; }
-.activityTitle { font-size: 14px; font-weight: 700; line-height: 1.2; }
+.activityTitle { font-size: 13.5px; font-weight: 700; line-height: 1.2; }
 .activitySub { font-size: 12px; color: #9aa3d6; }
 
 .check {
@@ -127,48 +148,64 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px solid #4a56c9;
+  border: 1.5px solid #5560d8;
   border-radius: 50%;
   color: #fff;
   transition: background 0.2s, border-color 0.2s;
 }
-.done .check { background: #3a4bd6; border-color: #7f8cff; }
+.done .check { background: #3a4bd6; border-color: #9aa6ff; box-shadow: 0 0 12px rgba(91, 109, 240, 0.6); }
 
-.art {
-  flex: 1;
-  min-width: 0;
-  max-height: 100%;
-  aspect-ratio: 360 / 340;
-}
-.svg { width: 100%; height: 100%; display: block; }
+.art { flex: 1; min-width: 0; max-height: 100%; aspect-ratio: 360 / 340; }
+.svg { width: 100%; height: 100%; display: block; overflow: visible; }
 .progressArc { transition: stroke-dasharray 0.6s ease; }
 
-/* ---------- Coin animation ---------- */
+/* ---------- Animation ---------- */
 .float { animation: floatY 4s ease-in-out infinite; }
 .floatA { animation-delay: 0s; }
 .floatB { animation-delay: -1.3s; }
 .floatC { animation-delay: -2.6s; }
 @keyframes floatY {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+  50% { transform: translateY(-9px); }
+}
+.flow { opacity: 0.3; animation: flowPulse 1.8s ease-in-out infinite; }
+.flowD0 { animation-delay: 0s; }
+.flowD1 { animation-delay: 0.2s; }
+.flowD2 { animation-delay: 0.4s; }
+@keyframes flowPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .float { animation: none; }
+  .flow { animation: none; opacity: 1; }
   .progressArc, .activity, .check { transition: none; }
 }
 
 /* ---------- Tablet (380-540px tall) ---------- */
 @media (max-width: 991px) {
-  .card { min-height: 380px; max-height: 540px; padding: 0 28px; gap: 16px; }
-  .visual { height: 300px; }
-  .activities { flex-basis: 150px; }
+  .card {
+    height: auto;
+    min-height: 380px;
+    max-height: 540px;
+    padding: 28px 24px 28px 32px;
+    gap: 16px;
+  }
+  .visual { flex: 0 1 360px; height: auto; flex-direction: column-reverse; align-items: center; gap: 8px; }
+  .art { flex: none; width: 100%; max-width: 250px; }
+  .activities { flex: none; width: 100%; flex-direction: row; gap: 6px; }
+  .activity { flex: 1; min-width: 0; flex-direction: column; gap: 4px; padding: 8px 4px; text-align: center; }
+  .iconBox { width: 28px; height: 28px; }
+  .activityTitle { font-size: 12px; }
   .activitySub { display: none; }
+  .check { width: 18px; height: 18px; }
 }
 
 /* ---------- Mobile (330-520px tall) ---------- */
 @media (max-width: 767px) {
   .card {
+    height: auto;
     min-height: 330px;
     max-height: 520px;
     flex-direction: column;
@@ -176,31 +213,19 @@
     justify-content: center;
     gap: 8px;
     padding: 16px 20px 18px;
+    border-radius: 22px;
   }
   .content { flex: none; width: 100%; min-width: 0; gap: 8px; }
-  .heading { font-size: 26px; }
-  .rule { display: none; }
+  .heading { font-size: 28px; }
   .text { font-size: 13px; line-height: 1.4; }
   .status { font-size: 12px; }
-
-  .visual {
-    order: -1;
-    width: 100%;
-    height: auto;
-    flex-direction: column-reverse;
-    align-items: center;
-    gap: 8px;
-  }
-  .art { flex: none; width: 100%; max-width: 210px; }
+  .rule { display: none; }
+  .ctaRow { flex-wrap: nowrap; gap: 8px; }
+  .counter { height: 34px; padding: 0 10px; font-size: 13px; }
+  .visual { order: -1; flex: none; width: 100%; height: auto; flex-direction: column-reverse; align-items: center; gap: 8px; }
+  .art { flex: none; width: 100%; max-width: 190px; }
   .activities { flex: none; width: 100%; flex-direction: row; gap: 8px; }
-  .activity {
-    flex: 1;
-    min-width: 0;
-    flex-direction: column;
-    gap: 4px;
-    padding: 8px 4px;
-    text-align: center;
-  }
+  .activity { flex: 1; min-width: 0; flex-direction: column; gap: 4px; padding: 8px 4px; text-align: center; }
   .iconBox { width: 28px; height: 28px; }
   .activityTitle { font-size: 11.5px; }
   .check { width: 18px; height: 18px; }

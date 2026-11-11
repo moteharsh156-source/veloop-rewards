@@ -1,5 +1,6 @@
 import { useRef } from 'react';
-import { ChevronsRight, Check } from 'lucide-react';
+import { Check } from 'lucide-react';
+import CtaButton from '../CtaButton/CtaButton';
 import CaptchaIllustration from './CaptchaIllustration';
 import useCaptcha from '../../hooks/useCaptcha';
 import { CAPTCHA_CONFIG } from '../../utils/rewardConfig';
@@ -7,9 +8,11 @@ import styles from './CaptchaTasksBanner.module.css';
 
 function MiniGem() {
   return (
-    <svg width="26" height="26" viewBox="-30 -32 60 60" aria-hidden="true">
-      <polygon points="0,-28 24,-10 15,24 -15,24 -24,-10" fill="#8d79e3" />
-      <polygon points="0,-28 24,-10 0,-2 -24,-10" fill="#b7a8f5" />
+    <svg width="30" height="30" viewBox="-30 -32 60 64" aria-hidden="true">
+      <polygon points="0,-30 26,-14 0,-4 -26,-14" fill="#d3c4ff" />
+      <polygon points="-26,-14 0,-4 -18,20" fill="#9079f0" />
+      <polygon points="26,-14 0,-4 18,20" fill="#6d52d6" />
+      <polygon points="-18,20 0,-4 18,20 0,32" fill="#573fbb" />
     </svg>
   );
 }
@@ -33,7 +36,6 @@ export default function CaptchaTasksBanner() {
   return (
     <section className={styles.card} aria-label="Captcha tasks">
       <div className={styles.content}>
-        <span className={styles.tag}>TASK-BASED EARNING</span>
         <h2 className={styles.heading}>
           Solve Captchas.<br />
           <span className={styles.accent}>Earn Gems.</span>
@@ -43,21 +45,19 @@ export default function CaptchaTasksBanner() {
           Complete simple captcha tasks accurately and earn eligible Gem rewards.
         </p>
 
-        <button type="button" className={styles.cta} onClick={startTask}>
-          <span className={styles.ctaIcon}>
-            <ChevronsRight size={20} className={styles.ctaArrow} aria-hidden="true" />
-          </span>
-          <span className={styles.ctaLabel}>START TASK</span>
-        </button>
+        <CtaButton variant="block" label="START TASK" onClick={startTask} />
 
         <div className={styles.flow} aria-label="How it works: solve the captcha, get verified, receive gems">
-          <span className={`${styles.chip} ${styles.chipCode}`}>K7M4</span>
-          <span className={styles.dots} aria-hidden="true">›››</span>
-          <span className={`${styles.chip} ${styles.chipRound} ${status === 'success' ? styles.chipDone : ''}`}>
-            <Check size={22} aria-hidden="true" />
+          <span className={styles.tile}>
+            <span className={styles.miniCaptcha} aria-hidden="true">K7M4</span>
+            <span className={styles.miniBar} aria-hidden="true" />
           </span>
-          <span className={styles.dots} aria-hidden="true">›››</span>
-          <span className={styles.chip}>
+          <span className={styles.dotArrow} aria-hidden="true" />
+          <span className={`${styles.tile} ${styles.tileRound} ${status === 'success' ? styles.tileDone : ''}`}>
+            <Check size={24} aria-hidden="true" />
+          </span>
+          <span className={styles.dotArrow} aria-hidden="true" />
+          <span className={styles.tile}>
             <MiniGem />
             {gems > 0 && (
               <span key={gems} className={styles.badge} aria-label={`${gems} gems earned`}>{gems}</span>
