@@ -136,8 +136,8 @@
   position: absolute;
   left: -6%;
   right: -6%;
-  top: -12%;
-  bottom: -12%;
+  top: -3%;
+  bottom: -3%;
   z-index: -1;
   pointer-events: none;
   background:
@@ -214,7 +214,7 @@
 @media (max-width: 991px) {
   .card {
     height: auto;
-    min-height: 380px;
+    min-height: 420px;
     max-height: 540px;
     padding: 28px 24px 28px 32px;
     gap: 16px;
@@ -226,7 +226,7 @@
 @media (max-width: 767px) {
   .card {
     height: auto;
-    min-height: 330px;
+    min-height: 510px;
     max-height: 520px;
     flex-direction: column;
     align-items: flex-start;

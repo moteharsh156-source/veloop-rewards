@@ -81,14 +81,14 @@
 
 /* ---------- Tablet ---------- */
 @media (max-width: 991px) {
-  .wrap { height: auto; min-height: 380px; max-height: 540px; padding: 28px 32px; gap: 16px; }
+  .wrap { height: auto; min-height: 420px; max-height: 540px; padding: 28px 32px; gap: 16px; }
   .emblem { flex-basis: 240px; height: 240px; margin-right: 0; }
 }
 
 /* ---------- Mobile ---------- */
 @media (max-width: 767px) {
   .wrap {
-    min-height: 330px;
+    min-height: 510px;
     max-height: 520px;
     flex-direction: column-reverse;
     align-items: flex-start;
