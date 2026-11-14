@@ -1,10 +1,7 @@
 import { NavLink } from 'react-router-dom';
-import { Bell } from 'lucide-react';
 import Logo from './Logo';
+import NotificationMenu from './NotificationMenu';
 import styles from './Header.module.css';
-
-// Dummy data for development only
-const NOTIFICATION_COUNT = 3;
 
 // Add one entry here for every new banner page
 const NAV_ITEMS = [
@@ -12,6 +9,7 @@ const NAV_ITEMS = [
   { to: '/bonus-ves', label: 'Bonus VEs' },
   { to: '/swap-center', label: 'Swap Center' },
   { to: '/exchange-center', label: 'Exchange Center' },
+  { to: '/refer-earn', label: 'Refer & Earn' },
 ];
 
 export default function Header() {
@@ -26,10 +24,7 @@ export default function Header() {
             <span className={styles.statusText}>Rewards journey</span>
           </span>
 
-          <button type="button" className={styles.iconBtn} aria-label={`Notifications, ${NOTIFICATION_COUNT} new`}>
-            <Bell size={18} aria-hidden="true" />
-            <span className={styles.badge} aria-hidden="true">{NOTIFICATION_COUNT}</span>
-          </button>
+          <NotificationMenu />
 
           <button type="button" className={styles.avatar} aria-label="Open profile menu">V</button>
         </div>
