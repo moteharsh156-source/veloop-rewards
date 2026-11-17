@@ -1,22 +1,40 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeftRight, Bell, CheckCheck, Gift, ShieldCheck, Users } from 'lucide-react';
-import { NOTIFICATIONS } from '../../utils/notificationsData';
+import { ArrowLeftRight, Bell, CheckCheck, Gift, RefreshCw, ShieldCheck, Users } from 'lucide-react';
+import { markNotificationsRead, useStore } from '../../services/rewardsStore';
+import { formatDelta, formatWhen } from '../../utils/format';
 import header from './Header.module.css';
 import styles from './NotificationMenu.module.css';
 
-const ICONS = { bonus: Gift, refer: Users, captcha: ShieldCheck, swap: ArrowLeftRight };
+const ICONS = { captcha: ShieldCheck, bonus: Gift, referral: Users, swap: ArrowLeftRight, exchange: RefreshCw };
+const PAGES = {
+  captcha: '/captcha-tasks',
+  bonus: '/bonus-ves',
+  referral: '/refer-earn',
+  swap: '/swap-center',
+  exchange: '/exchange-center',
+};
 
+/** Notifications are built from the real activity ledger: nothing is made up. */
 export default function NotificationMenu() {
+  const ledger = useStore((s) => s.ledger);
+  const readAt = useStore((s) => s.notifReadAt);
   const [open, setOpen] = useState(false);
-  const [items, setItems] = useState(NOTIFICATIONS);
   const wrapRef = useRef(null);
   const btnRef = useRef(null);
+  const wasOpen = useRef(false);
   const navigate = useNavigate();
 
-  const unread = items.filter((i) => !i.read).length;
+  const items = ledger.slice(0, 8);
+  const unread = ledger.filter((e) => e.at > readAt).length;
+  const unreadLabel = unread > 9 ? '9+' : String(unread);
 
-  // close on Escape or when clicking outside
+  // opening shows what is new; closing marks it as read
+  useEffect(() => {
+    if (wasOpen.current && !open) markNotificationsRead();
+    wasOpen.current = open;
+  }, [open]);
+
   useEffect(() => {
     if (!open) return undefined;
     const onKey = (e) => {
@@ -36,12 +54,9 @@ export default function NotificationMenu() {
     };
   }, [open]);
 
-  const markAll = () => setItems((list) => list.map((i) => ({ ...i, read: true })));
-
-  const openItem = (item) => {
-    setItems((list) => list.map((i) => (i.id === item.id ? { ...i, read: true } : i)));
+  const openItem = (entry) => {
     setOpen(false);
-    navigate(item.to);
+    navigate(PAGES[entry.type] || '/captcha-tasks');
   };
 
   return (
@@ -57,38 +72,35 @@ export default function NotificationMenu() {
         aria-label={unread > 0 ? `Notifications, ${unread} unread` : 'Notifications, none unread'}
       >
         <Bell size={18} aria-hidden="true" />
-        {unread > 0 && <span className={header.badge} aria-hidden="true">{unread}</span>}
+        {unread > 0 && <span className={header.badge} aria-hidden="true">{unreadLabel}</span>}
       </button>
 
       {open && (
         <div id="notification-panel" role="dialog" aria-label="Notifications" className={styles.panel}>
           <div className={styles.head}>
             <h2 className={styles.title}>Notifications</h2>
-            <button type="button" className={styles.markAll} onClick={markAll} disabled={unread === 0}>
+            <button type="button" className={styles.markAll} onClick={() => markNotificationsRead()} disabled={unread === 0}>
               <CheckCheck size={15} aria-hidden="true" /> Mark all as read
             </button>
           </div>
 
           {items.length === 0 ? (
-            <p className={styles.empty}>You are all caught up.</p>
+            <p className={styles.empty}>No activity yet. Solve a captcha to earn your first Gems and it will show up here.</p>
           ) : (
             <ul className={styles.list}>
               {items.map((item) => {
                 const Icon = ICONS[item.type] || Bell;
+                const isNew = item.at > readAt;
                 return (
                   <li key={item.id}>
-                    <button
-                      type="button"
-                      className={`${styles.item} ${item.read ? '' : styles.unread}`}
-                      onClick={() => openItem(item)}
-                    >
+                    <button type="button" className={`${styles.item} ${isNew ? styles.unread : ''}`} onClick={() => openItem(item)}>
                       <span className={styles.icon}><Icon size={18} aria-hidden="true" /></span>
                       <span className={styles.text}>
-                        <span className={styles.itemTitle}>{item.title}</span>
-                        <span className={styles.itemText}>{item.text}</span>
-                        <span className={styles.time}>{item.time}</span>
+                        <span className={styles.itemTitle}>{item.label}</span>
+                        {formatDelta(item.delta) && <span className={styles.itemText}>{formatDelta(item.delta)}</span>}
+                        <span className={styles.time}>{formatWhen(item.at)}</span>
                       </span>
-                      {!item.read && <span className={styles.dot} aria-label="Unread" />}
+                      {isNew && <span className={styles.dot} aria-label="New" />}
                     </button>
                   </li>
                 );

@@ -1,16 +1,15 @@
-import { useState } from 'react';
 import CtaButton from '../CtaButton/CtaButton';
 import SwapIllustration from './SwapIllustration';
-import { SWAP_DEMO } from '../../utils/swapData';
+import useCountUp from '../../hooks/useCountUp';
+import { useStore } from '../../services/rewardsStore';
 import styles from './SwapCenterBanner.module.css';
 
-export default function SwapCenterBanner({ onOpen = () => {} }) {
-  const [flipped, setFlipped] = useState(false);
-
-  const { amount, rate, from, to } = SWAP_DEMO;
-  const fromLabel = flipped ? to : from;
-  const toLabel = flipped ? from : to;
-  const result = flipped ? Math.round(amount / rate) : Math.round(amount * rate);
+/** direction: 've-sve' | 'sve-ve' (shared with the swap panel below). */
+export default function SwapCenterBanner({ direction, onFlip, onOpen }) {
+  const wallet = useStore((s) => s.wallet);
+  const ve = useCountUp(wallet.ve, 600);
+  const sve = useCountUp(wallet.sve, 600);
+  const flipped = direction === 'sve-ve';
 
   return (
     <section className={styles.card} aria-label="Swap Center">
@@ -29,13 +28,13 @@ export default function SwapCenterBanner({ onOpen = () => {} }) {
 
         <CtaButton variant="rect" label="OPEN SWAP CENTER" onClick={onOpen} />
 
-        <p className={styles.status} role="status" aria-live="polite">
-          Preview: {amount} {fromLabel} → {result} {toLabel} (demo rate, not official).
+        <p className={styles.status}>
+          Your balance: {wallet.ve.toLocaleString()} VE · {wallet.sve.toLocaleString()} SVE. Swapping {flipped ? 'SVE → VE' : 'VE → SVE'}.
         </p>
       </div>
 
       <div className={styles.visual}>
-        <SwapIllustration flipped={flipped} onSwap={() => setFlipped((f) => !f)} />
+        <SwapIllustration flipped={flipped} onSwap={onFlip} ve={ve} sve={sve} />
       </div>
     </section>
   );

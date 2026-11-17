@@ -1,16 +1,11 @@
-import { Check, RefreshCw } from 'lucide-react';
-import CaptchaCanvas from './CaptchaCanvas';
 import styles from './CaptchaTasksBanner.module.css';
 
-export default function CaptchaIllustration({
-  code, input, status, inputRef, onInput, onVerify, onRefresh,
-}) {
-  const locked = status === 'success';
-
+// Decorative artwork only. The real, working captcha lives in the Task Center below the banner.
+export default function CaptchaIllustration() {
   return (
-    <div className={styles.art}>
-      {/* Laptop, platform and gems (decorative) */}
-      <svg viewBox="0 0 520 340" className={styles.svg} aria-hidden="true">
+    <div className={styles.art} aria-hidden="true">
+      <svg viewBox="0 0 520 340" className={styles.svg}>
+
         <defs><linearGradient id="cScr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#2a3079"/><stop offset="1" stopColor="#151947"/></linearGradient><linearGradient id="cRim" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#b3bdff"/><stop offset="1" stopColor="#4a53c2"/></linearGradient><linearGradient id="cDeck" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#434a9e"/><stop offset="1" stopColor="#1e2362"/></linearGradient><linearGradient id="cSlab" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#343b8a"/><stop offset="1" stopColor="#141845"/></linearGradient><linearGradient id="cGlare" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#ffffff" stopOpacity=".16"/><stop offset="1" stopColor="#ffffff" stopOpacity="0"/></linearGradient><radialGradient id="cGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stopColor="#7a5cff" stopOpacity=".55"/><stop offset="1" stopColor="#7a5cff" stopOpacity="0"/></radialGradient><linearGradient id="cSwirl" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stopColor="#cbbcff" stopOpacity="0"/><stop offset="1" stopColor="#cbbcff" stopOpacity=".95"/></linearGradient><pattern id="cKeys" width="22" height="13" patternUnits="userSpaceOnUse"><rect x="2" y="2" width="18" height="9" rx="3" fill="#3f46a0"/><rect x="2" y="2" width="18" height="3" rx="1.5" fill="#6a74e8" fillOpacity=".45"/></pattern><filter id="cBlur"><feGaussianBlur stdDeviation="6"/></filter></defs>
         <ellipse cx="270" cy="170" rx="285" ry="200" fill="url(#cGlow)"/>
         <ellipse cx="262" cy="318" rx="225" ry="18" fill="#000" fillOpacity=".55" filter="url(#cBlur)"/>
@@ -34,40 +29,19 @@ export default function CaptchaIllustration({
         <path d="M34 94 L36.0 98.0 L40 100 L36.0 102.0 L34 106 L32.0 102.0 L28 100 L32.0 98.0 Z" fill="#f4efff" fillOpacity=".95"/>
         <path d="M500 209 L502.0 213.0 L506 215 L502.0 217.0 L500 221 L498.0 217.0 L494 215 L498.0 213.0 Z" fill="#f4efff" fillOpacity=".95"/>
         <path d="M120 295 L121.7 298.3 L125 300 L121.7 301.7 L120 305 L118.3 301.7 L115 300 L118.3 298.3 Z" fill="#f4efff" fillOpacity=".95"/>
+      
+        {/* decorative preview of the task on the laptop screen */}
+        <rect x="132" y="40" width="200" height="66" rx="8" fill="#dcdce8"/>
+        <text x="232" y="90" textAnchor="middle" fontFamily="Georgia,serif" fontWeight="700" fontSize="44" letterSpacing="6" fill="#2b2b40">K7M4</text>
+        <path d="M136 62 L328 92 M140 96 L326 56" stroke="#2b2b40" strokeOpacity=".45" strokeWidth="1.5"/>
+        <circle cx="366" cy="56" r="18" fill="#2c3174" stroke="#6f78e0"/>
+        <path d="M358 56 a8 8 0 1 1 3 6.5 M358 49 v7 h7" fill="none" stroke="#d6d9ff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+        <rect x="132" y="124" width="176" height="42" rx="9" fill="#0a0c26" stroke="#3d4290"/>
+        <text x="148" y="152" fontFamily="monospace" fontWeight="700" fontSize="20" fill="#e6e8ff">K7M4</text>
+        <rect x="214" y="136" width="2" height="18" fill="#e6e8ff"/>
+        <rect x="320" y="124" width="62" height="42" rx="9" fill="#5a63d6"/>
+        <path d="M338 145 l8 8 l16 -17" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
-
-      {/* Working captcha on the laptop screen */}
-      <div className={styles.captchaBox}>
-        <CaptchaCanvas code={code} />
-      </div>
-
-      <button type="button" className={styles.refreshBtn} onClick={onRefresh} aria-label="Get a new captcha">
-        <RefreshCw size="60%" aria-hidden="true" />
-      </button>
-
-      <form
-        className={styles.answerForm}
-        onSubmit={(e) => { e.preventDefault(); onVerify(); }}
-        noValidate
-      >
-        <input
-          ref={inputRef}
-          className={styles.answerInput}
-          data-status={status}
-          value={input}
-          onChange={(e) => onInput(e.target.value)}
-          readOnly={locked}
-          maxLength={code.length}
-          autoComplete="off"
-          autoCapitalize="characters"
-          spellCheck={false}
-          aria-label="Type the characters shown in the captcha"
-          placeholder="Type code"
-        />
-        <button type="submit" className={styles.verifyBtn} data-status={status} aria-label="Verify answer">
-          <Check size="60%" aria-hidden="true" />
-        </button>
-      </form>
     </div>
   );
 }

@@ -3,10 +3,11 @@ import { RefreshCw } from 'lucide-react';
 import CtaButton from '../CtaButton/CtaButton';
 import ExchangeIllustration from './ExchangeIllustration';
 import useCountUp from '../../hooks/useCountUp';
-import { EXCHANGE_DEMO } from '../../utils/exchangeData';
+import { useStore } from '../../services/rewardsStore';
+import { ECONOMY } from '../../services/economy';
 import styles from './ExchangeCenterBanner.module.css';
 
-const { startGems, startVe, gemsPerStep, vePerStep } = EXCHANGE_DEMO;
+const { gemsPerVe } = ECONOMY.exchange;
 
 function GemIcon() {
   return (
@@ -19,42 +20,28 @@ function GemIcon() {
   );
 }
 
-function VeCoin() {
-  return <span className={styles.miniCoin} aria-hidden="true">VE</span>;
-}
+export default function ExchangeCenterBanner({ onOpen }) {
+  const wallet = useStore((s) => s.wallet);
+  const history = useStore((s) => s.exchange.history);
+  const gems = useCountUp(wallet.gems, 700);
+  const ve = useCountUp(wallet.ve, 700);
 
-const MESSAGES = {
-  idle: 'Press the convert button to preview an exchange.',
-  done: `Converted ${gemsPerStep} Gems → ${vePerStep} VE (demo rate, not official).`,
-  reset: 'Demo balances reset. Press convert to try again.',
-};
-
-export default function ExchangeCenterBanner({ onOpen = () => {} }) {
-  const [gems, setGems] = useState(startGems);
-  const [ve, setVe] = useState(startVe);
+  // the gem-flow animation plays whenever a real conversion is saved
   const [converting, setConverting] = useState(false);
-  const [message, setMessage] = useState('idle');
+  const lastId = useRef(history[0]?.id);
   const timer = useRef(null);
-
+  useEffect(() => {
+    const head = history[0]?.id;
+    if (head && head !== lastId.current) {
+      lastId.current = head;
+      setConverting(true);
+      clearTimeout(timer.current);
+      timer.current = setTimeout(() => setConverting(false), 900);
+    }
+  }, [history]);
   useEffect(() => () => clearTimeout(timer.current), []);
 
-  const convert = () => {
-    if (converting) return;
-    if (gems < gemsPerStep) {
-      setGems(startGems);
-      setVe(startVe);
-      setMessage('reset');
-      return;
-    }
-    setConverting(true);
-    setMessage('done');
-    setGems((g) => g - gemsPerStep);
-    setVe((v) => v + vePerStep);
-    timer.current = setTimeout(() => setConverting(false), 900);
-  };
-
-  const gemsShown = useCountUp(gems);
-  const veShown = useCountUp(ve);
+  const last = history[0];
 
   return (
     <section className={styles.card} aria-label="Exchange Center">
@@ -84,16 +71,18 @@ export default function ExchangeCenterBanner({ onOpen = () => {} }) {
           </div>
           <span className={styles.dotArrow} aria-hidden="true" />
           <div className={styles.step}>
-            <span className={styles.tile}><VeCoin /></span>
+            <span className={styles.tile}><span className={styles.miniCoin} aria-hidden="true">VE</span></span>
             <span className={`${styles.stepLabel} ${styles.lVe}`}>VE</span>
           </div>
         </div>
 
-        <p className={styles.status} role="status" aria-live="polite">{MESSAGES[message]}</p>
+        <p className={styles.status}>
+          {last ? `Last exchange: ${last.gems} Gems → ${last.ve} VE.` : `Rate: ${gemsPerVe} Gems = 1 VE.`}
+        </p>
       </div>
 
       <div className={styles.visual}>
-        <ExchangeIllustration gems={gemsShown} ve={veShown} converting={converting} onConvert={convert} />
+        <ExchangeIllustration gems={gems} ve={ve} converting={converting} onConvert={onOpen} />
       </div>
     </section>
   );

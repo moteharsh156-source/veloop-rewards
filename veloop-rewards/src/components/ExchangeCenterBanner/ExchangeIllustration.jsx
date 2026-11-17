@@ -1,7 +1,8 @@
 import { RefreshCw } from 'lucide-react';
 import styles from './ExchangeCenterBanner.module.css';
 
-// gems / ve: balances shown on the two cards. converting: plays the gem-flow animation.
+// gems / ve: the live balances shown on the two cards. converting: plays the gem-flow animation.
+// onConvert: opens the converter below the banner.
 export default function ExchangeIllustration({ gems, ve, converting, onConvert }) {
   return (
     <div className={styles.art} data-converting={converting}>
@@ -41,7 +42,7 @@ export default function ExchangeIllustration({ gems, ve, converting, onConvert }
         <path d="M280 98 A52 52 0 0 1 332 150" fill="none" stroke="#f0cb6f" strokeWidth="3" strokeLinecap="round" strokeOpacity=".9"/>
         <path d="M280 202 A52 52 0 0 1 228 150" fill="none" stroke="#b8a2ff" strokeWidth="3" strokeLinecap="round" strokeOpacity=".9"/>
         <rect x="200" y="266" width="160" height="58" rx="12" fill="#14183f" fillOpacity=".92" stroke="#3d4390"/>
-        <text x="280" y="284" textAnchor="middle" fontFamily="Manrope,sans-serif" fontWeight="700" fontSize="7.5" letterSpacing="1" fill="#aeb4dc">EXCHANGE RATE (DEMO)</text>
+        <text x="280" y="284" textAnchor="middle" fontFamily="Manrope,sans-serif" fontWeight="700" fontSize="7.5" letterSpacing="1" fill="#aeb4dc">EXCHANGE RATE</text>
         <g transform="translate(236 306) scale(0.42)"><g><polygon points="0,-30 26,-14 0,-4 -26,-14" fill="#d3c4ff"/><polygon points="-26,-14 0,-4 -18,20" fill="#9079f0"/><polygon points="26,-14 0,-4 18,20" fill="#6d52d6"/><polygon points="-18,20 0,-4 18,20 0,32" fill="#573fbb"/><polygon points="-9,-21 0,-27 7,-19 -2,-13" fill="#fff" fillOpacity=".55"/><path d="M-26 -14 L0 -30 L26 -14 L18 20 L0 32 L-18 20 Z" fill="none" stroke="#e6dcff" strokeOpacity=".5" strokeWidth="1"/></g></g>
         <text x="280" y="310" textAnchor="middle" fontFamily="Manrope,sans-serif" fontWeight="800" fontSize="12" fill="#8f98f0">&gt;&gt;&gt;</text>
         <circle cx="324" cy="307.1" r="11" fill="#7d5a12"/><circle cx="324" cy="306" r="11" fill="url(#xCoin)" stroke="#b98a22" strokeWidth="2"/><circle cx="324" cy="306" r="8.1" fill="none" stroke="#fbe6a0" strokeOpacity=".65" strokeWidth="2"/><text x="324" y="309.3" textAnchor="middle" fontFamily="Georgia,serif" fontWeight="700" fontSize="10.1" fill="#7a5a12">VE</text>
@@ -55,7 +56,7 @@ export default function ExchangeIllustration({ gems, ve, converting, onConvert }
         type="button"
         className={styles.convertBtn}
         onClick={onConvert}
-        aria-label="Convert Gems to VEs (demo)"
+        aria-label="Open the converter"
       >
         <RefreshCw size="52%" className={styles.convertIcon} aria-hidden="true" />
       </button>

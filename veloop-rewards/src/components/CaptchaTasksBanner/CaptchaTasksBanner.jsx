@@ -1,9 +1,6 @@
-import { useRef } from 'react';
 import { Check } from 'lucide-react';
 import CtaButton from '../CtaButton/CtaButton';
 import CaptchaIllustration from './CaptchaIllustration';
-import useCaptcha from '../../hooks/useCaptcha';
-import { CAPTCHA_CONFIG } from '../../utils/rewardConfig';
 import styles from './CaptchaTasksBanner.module.css';
 
 function MiniGem() {
@@ -17,21 +14,17 @@ function MiniGem() {
   );
 }
 
-const MESSAGES = {
-  idle: 'Type the characters you see, then press Enter.',
-  short: `Enter all ${CAPTCHA_CONFIG.codeLength} characters.`,
-  success: `Correct! +${CAPTCHA_CONFIG.gemsPerTask} Gem added (demo value).`,
-  error: "That didn't match. Here's a new captcha.",
-};
-
-export default function CaptchaTasksBanner() {
-  const inputRef = useRef(null);
-  const { code, input, setInput, status, gems, refresh, verify } = useCaptcha();
-
-  const startTask = () => {
-    refresh();
-    inputRef.current?.focus();
-  };
+/**
+ * ctl: the task controller from useCaptchaTask (balance, progress, phase).
+ * onStart: scrolls to the Task Center and starts a task.
+ */
+export default function CaptchaTasksBanner({ ctl, onStart }) {
+  const snap = ctl?.snap;
+  const gems = snap?.gems ?? 0;
+  const done = snap?.completedToday ?? 0;
+  const limit = snap?.dailyLimit ?? 10;
+  const phase = ctl?.phase;
+  const running = phase === 'active' || phase === 'verifying';
 
   return (
     <section className={styles.card} aria-label="Captcha tasks">
@@ -45,7 +38,7 @@ export default function CaptchaTasksBanner() {
           Complete simple captcha tasks accurately and earn eligible Gem rewards.
         </p>
 
-        <CtaButton variant="block" label="START TASK" onClick={startTask} />
+        <CtaButton variant="block" label={running ? 'CONTINUE TASK' : 'START TASK'} onClick={onStart} />
 
         <div className={styles.flow} aria-label="How it works: solve the captcha, get verified, receive gems">
           <span className={styles.tile}>
@@ -53,7 +46,7 @@ export default function CaptchaTasksBanner() {
             <span className={styles.miniBar} aria-hidden="true" />
           </span>
           <span className={styles.dotArrow} aria-hidden="true" />
-          <span className={`${styles.tile} ${styles.tileRound} ${status === 'success' ? styles.tileDone : ''}`}>
+          <span className={`${styles.tile} ${styles.tileRound} ${phase === 'success' ? styles.tileDone : ''}`}>
             <Check size={24} aria-hidden="true" />
           </span>
           <span className={styles.dotArrow} aria-hidden="true" />
@@ -65,21 +58,13 @@ export default function CaptchaTasksBanner() {
           </span>
         </div>
 
-        <p className={styles.status} data-status={status} role="status" aria-live="polite">
-          {MESSAGES[status]}
+        <p className={styles.status}>
+          Today: {done}/{limit} tasks · {gems} Gems earned
         </p>
       </div>
 
       <div className={styles.visual}>
-        <CaptchaIllustration
-          code={code}
-          input={input}
-          status={status}
-          inputRef={inputRef}
-          onInput={setInput}
-          onVerify={verify}
-          onRefresh={refresh}
-        />
+        <CaptchaIllustration />
       </div>
     </section>
   );

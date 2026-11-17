@@ -1,18 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { ArrowRight, Gift, Users, X } from 'lucide-react';
 import ReferIllustration from './ReferIllustration';
 import useCountUp from '../../hooks/useCountUp';
-import { REFER_DEMO, REFER_FEATURES, REFER_STEPS } from '../../utils/referData';
+import { useStore } from '../../services/rewardsStore';
+import { ECONOMY } from '../../services/economy';
+import { REFER_FEATURES, REFER_STEPS } from '../../utils/referData';
 import styles from './ReferEarnBanner.module.css';
 
-const MESSAGES = {
-  idle: 'Demo code and reward values shown.',
-  copied: 'Referral code copied to your clipboard.',
-  manual: `Could not copy automatically. Your code is ${REFER_DEMO.code}.`,
-};
+const R = ECONOMY.referral;
 
-export default function ReferEarnBanner({ inviteTo = '/refer' }) {
+export default function ReferEarnBanner({ onInvite }) {
+  const referral = useStore((s) => s.referral);
+  const code = referral.code;
+  const joined = referral.friends.length;
+  const verified = referral.friends.filter((f) => f.status === 'rewarded').length;
   const [copied, setCopied] = useState(false);
   const [message, setMessage] = useState('idle');
   const [started, setStarted] = useState(false);
@@ -24,13 +25,13 @@ export default function ReferEarnBanner({ inviteTo = '/refer' }) {
     return () => clearTimeout(timer.current);
   }, []);
 
-  const earn = useCountUp(started ? REFER_DEMO.earn : 0, 900);
-  const friend = useCountUp(started ? REFER_DEMO.friend : 0, 900);
+  const earn = useCountUp(started ? R.referrerVe : 0, 900);
+  const friend = useCountUp(started ? R.friendVe : 0, 900);
 
   const copyCode = async () => {
     clearTimeout(timer.current);
     try {
-      await navigator.clipboard.writeText(REFER_DEMO.code);
+      await navigator.clipboard.writeText(code);
       setCopied(true);
       setMessage('copied');
     } catch {
@@ -61,20 +62,26 @@ export default function ReferEarnBanner({ inviteTo = '/refer' }) {
           </p>
 
           <div className={styles.actions}>
-            <Link to={inviteTo} className={styles.invite}>
+            <button type="button" className={styles.invite} onClick={onInvite}>
               Invite Now <ArrowRight size={18} className={styles.inviteArrow} aria-hidden="true" />
-            </Link>
+            </button>
             <button type="button" className={styles.how} onClick={openHow}>
               <Gift size={18} aria-hidden="true" /> How It Works
             </button>
           </div>
 
-          <p className={styles.status} role="status" aria-live="polite">{MESSAGES[message]}</p>
+          <p className={styles.status} role="status" aria-live="polite">
+            {message === 'copied'
+              ? 'Referral code copied to your clipboard.'
+              : message === 'manual'
+                ? `Could not copy automatically. Your code is ${code}.`
+                : `${joined} ${joined === 1 ? 'friend' : 'friends'} joined · ${verified} verified`}
+          </p>
         </div>
 
         <div className={styles.visual}>
           <ReferIllustration
-            code={REFER_DEMO.code}
+            code={code}
             earn={earn}
             friend={friend}
             copied={copied}

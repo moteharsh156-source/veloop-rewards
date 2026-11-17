@@ -133,7 +133,7 @@
 .status[data-status='error'],
 .status[data-status='short'] { color: #f0a3a3; }
 
-/* ---------- Artwork + working captcha ---------- */
+/* ---------- Artwork (decorative preview) ---------- */
 .visual {
   position: relative;
   z-index: 1;
@@ -146,86 +146,6 @@
 .art { position: relative; width: 100%; max-width: 620px; aspect-ratio: 520 / 340; }
 .svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; overflow: visible; }
 
-.captchaBox {
-  position: absolute;
-  left: 25.4%;
-  top: 11%;
-  width: 38.5%;
-  height: 21%;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.25);
-}
-.captchaCanvas { width: 100%; height: 100%; display: block; }
-
-.refreshBtn {
-  position: absolute;
-  left: 65.9%;
-  top: 9.6%;
-  width: 9%;
-  aspect-ratio: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: 1px solid #8f98f0;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #4a54c8, #262d78);
-  color: #e3e6ff;
-  cursor: pointer;
-  box-shadow: 0 0 18px rgba(111, 120, 240, 0.45);
-  transition: transform 0.3s, background 0.2s;
-}
-.refreshBtn::after { content: ''; position: absolute; inset: -8px; }
-.refreshBtn:hover { transform: rotate(90deg); }
-.refreshBtn:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
-
-.answerForm { position: absolute; left: 25.4%; top: 36%; width: 48%; height: 15%; display: flex; gap: 3%; }
-.answerInput {
-  flex: 1;
-  min-width: 0;
-  padding: 0 12px;
-  border: 1px solid #3d4290;
-  border-radius: 10px;
-  background: #0a0c26;
-  color: #e6e8ff;
-  font: 700 22px monospace;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
-}
-.answerInput::placeholder { color: #6a70a8; letter-spacing: 0.04em; font-weight: 500; font-size: 14px; }
-.answerInput:focus-visible { outline: 3px solid #8f98f0; outline-offset: 1px; }
-.answerInput[data-status='error'] { border-color: #e07a7a; animation: shake 0.3s; }
-.answerInput[data-status='success'] { border-color: #5fbf8f; }
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
-}
-
-.verifyBtn {
-  position: relative;
-  flex: none;
-  width: 24%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  border: 0;
-  border-radius: 10px;
-  background: linear-gradient(180deg, #7480f0, #4a56d4);
-  color: #fff;
-  cursor: pointer;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 6px 16px rgba(74, 86, 212, 0.45);
-  transition: filter 0.2s, transform 0.2s;
-}
-.verifyBtn::after { content: ''; position: absolute; inset: -6px; }
-.verifyBtn:hover { filter: brightness(1.12); }
-.verifyBtn:active { transform: scale(0.96); }
-.verifyBtn:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
-.verifyBtn[data-status='success'] { background: linear-gradient(180deg, #55c995, #2f9a6c); }
-
 /* ---------- Animation ---------- */
 .float { animation: floatY 4s ease-in-out infinite; }
 .floatA { animation-delay: 0s; }
@@ -237,28 +157,27 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .float, .badge, .answerInput[data-status='error'] { animation: none; }
-  .refreshBtn, .verifyBtn, .tile { transition: none; }
+  .float, .badge { animation: none; }
+  .tile { transition: none; }
 }
 
 /* ---------- Tablet (380-540px tall) ---------- */
 @media (max-width: 991px) {
   .card {
     height: auto;
-    min-height: 380px;
+    min-height: 420px;
     max-height: 540px;
     padding: 28px 24px 28px 32px;
     gap: 16px;
   }
   .visual { flex-basis: 420px; }
-  .answerInput { font-size: 16px; }
 }
 
 /* ---------- Mobile (330-520px tall) ---------- */
 @media (max-width: 767px) {
   .card {
     height: auto;
-    min-height: 330px;
+    min-height: 510px;
     max-height: 520px;
     flex-direction: column;
     align-items: flex-start;
@@ -272,10 +191,9 @@
   .text { font-size: 13px; line-height: 1.4; }
   .status { font-size: 12px; }
   .visual { order: -1; flex: none; width: 100%; justify-content: center; }
-  .art { max-width: 300px; }
+  .art { max-width: 280px; margin-top: -4px; }
   .tile { width: 48px; height: 48px; border-radius: 12px; }
   .miniCaptcha { font-size: 9px; padding: 1px 3px; }
   .miniBar { width: 26px; height: 5px; }
   .dotArrow { width: 22px; }
-  .answerInput { font-size: 14px; padding: 0 6px; }
 }
