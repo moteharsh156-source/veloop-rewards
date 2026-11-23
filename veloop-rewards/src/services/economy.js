@@ -5,8 +5,6 @@
  */
 export const ECONOMY = {
   captcha: {
-    codeLength: 5,
-    charset: 'ABCDEFGHJKMNPQRSTUVWXYZ23456789', // no 0/O/1/I/L: easy to mix up
     ttlSeconds: 30,
     maxAttempts: 3,
     maxRefreshes: 3,

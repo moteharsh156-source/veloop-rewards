@@ -30,17 +30,29 @@ export default function CaptchaIllustration() {
         <path d="M500 209 L502.0 213.0 L506 215 L502.0 217.0 L500 221 L498.0 217.0 L494 215 L498.0 213.0 Z" fill="#f4efff" fillOpacity=".95"/>
         <path d="M120 295 L121.7 298.3 L125 300 L121.7 301.7 L120 305 L118.3 301.7 L115 300 L118.3 298.3 Z" fill="#f4efff" fillOpacity=".95"/>
       
-        {/* decorative preview of the task on the laptop screen */}
-        <rect x="132" y="40" width="200" height="66" rx="8" fill="#dcdce8"/>
-        <text x="232" y="90" textAnchor="middle" fontFamily="Georgia,serif" fontWeight="700" fontSize="44" letterSpacing="6" fill="#2b2b40">K7M4</text>
-        <path d="M136 62 L328 92 M140 96 L326 56" stroke="#2b2b40" strokeOpacity=".45" strokeWidth="1.5"/>
-        <circle cx="366" cy="56" r="18" fill="#2c3174" stroke="#6f78e0"/>
-        <path d="M358 56 a8 8 0 1 1 3 6.5 M358 49 v7 h7" fill="none" stroke="#d6d9ff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
-        <rect x="132" y="124" width="176" height="42" rx="9" fill="#0a0c26" stroke="#3d4290"/>
-        <text x="148" y="152" fontFamily="monospace" fontWeight="700" fontSize="20" fill="#e6e8ff">K7M4</text>
-        <rect x="214" y="136" width="2" height="18" fill="#e6e8ff"/>
-        <rect x="320" y="124" width="62" height="42" rx="9" fill="#5a63d6"/>
-        <path d="M338 145 l8 8 l16 -17" fill="none" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                {/* decorative preview of the task on the laptop screen */}
+        <text x="260" y="44" textAnchor="middle" fontFamily="Manrope,sans-serif" fontWeight="800" fontSize="12" fill="#cfd4ff">Select all gems</text>
+        <rect x="187" y="56" width="44" height="44" rx="10" fill="#1d2360" stroke="#3d4390" strokeWidth="1.2"/>
+        <circle cx="209" cy="78" r="10" fill="#e0ae45" stroke="#a87a1c" stroke-width="1.5"/><text x="209" y="82" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="11" fill="#7a5510">V</text>
+        <rect x="237" y="56" width="44" height="44" rx="10" fill="#1d2360" stroke="#f0cb6f" strokeWidth="2.5"/>
+        <g transform="translate(259 78) scale(.5)"><polygon points="0,-30 26,-14 0,-4 -26,-14" fill="#d6c8ff"/><polygon points="-26,-14 0,-4 -18,20" fill="#9079f0"/><polygon points="26,-14 0,-4 18,20" fill="#6d52d6"/><polygon points="-18,20 0,-4 18,20 0,32" fill="#4a35a8"/></g>
+        <circle cx="273" cy="64" r="7" fill="#f0cb6f"/><path d="M269.5 64 l2.5 2.5 l4.5 -5" fill="none" stroke="#1a1405" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+        <rect x="287" y="56" width="44" height="44" rx="10" fill="#1d2360" stroke="#3d4390" strokeWidth="1.2"/>
+        <path d="M309 67 l3.5 7 7.5 1 -5.5 5 1.5 7.5 -7 -4 -7 4 1.5 -7.5 -5.5 -5 7.5 -1 z" fill="#f07ab8" stroke="#c14a8a"/>
+        <rect x="187" y="106" width="44" height="44" rx="10" fill="#1d2360" stroke="#3d4390" strokeWidth="1.2"/>
+        <path d="M209 117 l10 4 v8 c0 6 -5 9 -10 12 c-5 -3 -10 -6 -10 -12 v-8 z" fill="#3fc6b4" stroke="#1f8f84"/>
+        <rect x="237" y="106" width="44" height="44" rx="10" fill="#1d2360" stroke="#3d4390" strokeWidth="1.2"/>
+        <circle cx="259" cy="128" r="10" fill="#e0ae45" stroke="#a87a1c" stroke-width="1.5"/><text x="259" y="132" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="11" fill="#7a5510">V</text>
+        <rect x="287" y="106" width="44" height="44" rx="10" fill="#1d2360" stroke="#f0cb6f" strokeWidth="2.5"/>
+        <g transform="translate(309 128) scale(.5)"><polygon points="0,-30 26,-14 0,-4 -26,-14" fill="#d6c8ff"/><polygon points="-26,-14 0,-4 -18,20" fill="#9079f0"/><polygon points="26,-14 0,-4 18,20" fill="#6d52d6"/><polygon points="-18,20 0,-4 18,20 0,32" fill="#4a35a8"/></g>
+        <circle cx="323" cy="114" r="7" fill="#f0cb6f"/><path d="M319.5 114 l2.5 2.5 l4.5 -5" fill="none" stroke="#1a1405" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+        <rect x="187" y="156" width="44" height="44" rx="10" fill="#1d2360" stroke="#f0cb6f" strokeWidth="2.5"/>
+        <g transform="translate(209 178) scale(.5)"><polygon points="0,-30 26,-14 0,-4 -26,-14" fill="#d6c8ff"/><polygon points="-26,-14 0,-4 -18,20" fill="#9079f0"/><polygon points="26,-14 0,-4 18,20" fill="#6d52d6"/><polygon points="-18,20 0,-4 18,20 0,32" fill="#4a35a8"/></g>
+        <circle cx="223" cy="164" r="7" fill="#f0cb6f"/><path d="M219.5 164 l2.5 2.5 l4.5 -5" fill="none" stroke="#1a1405" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+        <rect x="237" y="156" width="44" height="44" rx="10" fill="#1d2360" stroke="#3d4390" strokeWidth="1.2"/>
+        <path d="M259 167 l3.5 7 7.5 1 -5.5 5 1.5 7.5 -7 -4 -7 4 1.5 -7.5 -5.5 -5 7.5 -1 z" fill="#f07ab8" stroke="#c14a8a"/>
+        <rect x="287" y="156" width="44" height="44" rx="10" fill="#1d2360" stroke="#3d4390" strokeWidth="1.2"/>
+        <path d="M309 167 l10 4 v8 c0 6 -5 9 -10 12 c-5 -3 -10 -6 -10 -12 v-8 z" fill="#3fc6b4" stroke="#1f8f84"/>
       </svg>
     </div>
   );

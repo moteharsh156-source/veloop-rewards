@@ -20,6 +20,8 @@ export default function Header() {
   const headerRef = useRef(null);
   const menuBtnRef = useRef(null);
   const { pathname } = useLocation();
+  // the Captcha tab stays lit on the challenge and verification pages too
+  const isCaptchaSection = (to) => to === '/captcha-tasks' && pathname.startsWith('/captcha');
 
   // close the phone menu after navigating
   useEffect(() => {
@@ -78,7 +80,7 @@ export default function Header() {
           <NavLink
             key={to}
             to={to}
-            className={({ isActive }) => (isActive ? `${styles.navLink} ${styles.active}` : styles.navLink)}
+            className={({ isActive }) => (isActive || isCaptchaSection(to) ? `${styles.navLink} ${styles.active}` : styles.navLink)}
           >
             {label}
           </NavLink>
@@ -93,7 +95,7 @@ export default function Header() {
             <NavLink
               key={to}
               to={to}
-              className={({ isActive }) => (isActive ? `${styles.mobileLink} ${styles.mobileActive}` : styles.mobileLink)}
+              className={({ isActive }) => (isActive || isCaptchaSection(to) ? `${styles.mobileLink} ${styles.mobileActive}` : styles.mobileLink)}
             >
               <Icon size={20} aria-hidden="true" /> {label}
             </NavLink>

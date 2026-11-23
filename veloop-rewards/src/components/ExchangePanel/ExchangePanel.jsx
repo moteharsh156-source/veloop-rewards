@@ -85,7 +85,7 @@ export default function ExchangePanel({ panelRef, inputRef }) {
           {noGems && (
             <div className={ui.notice}>
               <p>You need at least {minNeeded} Gems to exchange. You have {wallet.gems}. Earn Gems by solving captcha tasks.</p>
-              <Link to="/captcha-tasks" className={ui.ghost}>Go to Captcha Tasks</Link>
+              <Link to="/captcha" className={ui.ghost}>Go to Captcha Tasks</Link>
             </div>
           )}
 

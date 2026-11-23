@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react';
+import { Check, Grid3x3 } from 'lucide-react';
 import CtaButton from '../CtaButton/CtaButton';
 import CaptchaIllustration from './CaptchaIllustration';
 import styles from './CaptchaTasksBanner.module.css';
@@ -14,17 +14,11 @@ function MiniGem() {
   );
 }
 
-/**
- * ctl: the task controller from useCaptchaTask (balance, progress, phase).
- * onStart: scrolls to the Task Center and starts a task.
- */
-export default function CaptchaTasksBanner({ ctl, onStart }) {
-  const snap = ctl?.snap;
-  const gems = snap?.gems ?? 0;
-  const done = snap?.completedToday ?? 0;
-  const limit = snap?.dailyLimit ?? 10;
-  const phase = ctl?.phase;
-  const running = phase === 'active' || phase === 'verifying';
+/** stats: live numbers from useCaptchaStats. onStart: opens the Captcha page. */
+export default function CaptchaTasksBanner({ stats, onStart }) {
+  const gems = stats?.gems ?? 0;
+  const done = stats?.completedToday ?? 0;
+  const limit = stats?.dailyLimit ?? 10;
 
   return (
     <section className={styles.card} aria-label="Captcha tasks">
@@ -35,32 +29,23 @@ export default function CaptchaTasksBanner({ ctl, onStart }) {
         </h2>
 
         <p className={styles.text}>
-          Complete simple captcha tasks accurately and earn eligible Gem rewards.
+          Pick the right images in a quick visual challenge and earn eligible Gem rewards.
         </p>
 
-        <CtaButton variant="block" label={running ? 'CONTINUE TASK' : 'START TASK'} onClick={onStart} />
+        <CtaButton variant="block" label="START TASK" onClick={onStart} />
 
-        <div className={styles.flow} aria-label="How it works: solve the captcha, get verified, receive gems">
-          <span className={styles.tile}>
-            <span className={styles.miniCaptcha} aria-hidden="true">K7M4</span>
-            <span className={styles.miniBar} aria-hidden="true" />
-          </span>
+        <div className={styles.flow} aria-label="How it works: solve the challenge, get verified, receive gems">
+          <span className={styles.tile}><Grid3x3 size={24} aria-hidden="true" /></span>
           <span className={styles.dotArrow} aria-hidden="true" />
-          <span className={`${styles.tile} ${styles.tileRound} ${phase === 'success' ? styles.tileDone : ''}`}>
-            <Check size={24} aria-hidden="true" />
-          </span>
+          <span className={`${styles.tile} ${styles.tileRound}`}><Check size={24} aria-hidden="true" /></span>
           <span className={styles.dotArrow} aria-hidden="true" />
           <span className={styles.tile}>
             <MiniGem />
-            {gems > 0 && (
-              <span key={gems} className={styles.badge} aria-label={`${gems} gems earned`}>{gems}</span>
-            )}
+            {gems > 0 && <span key={gems} className={styles.badge} aria-label={`${gems} gems earned`}>{gems}</span>}
           </span>
         </div>
 
-        <p className={styles.status}>
-          Today: {done}/{limit} tasks · {gems} Gems earned
-        </p>
+        <p className={styles.status}>Today: {done}/{limit} tasks · {gems} Gems earned</p>
       </div>
 
       <div className={styles.visual}>

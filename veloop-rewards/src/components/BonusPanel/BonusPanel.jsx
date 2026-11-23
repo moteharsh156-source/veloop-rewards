@@ -61,7 +61,7 @@ export default function BonusPanel({ panelRef, highlight }) {
       progressText: `${Math.min(st.tasks.done, st.tasks.required)} of ${st.tasks.required} captcha tasks completed today`,
       label: st.tasks.claimed ? 'Claimed today' : st.tasks.eligible ? `Claim +${st.tasks.ve} VE` : `Locked: ${st.tasks.done}/${st.tasks.required} tasks`,
       disabled: st.tasks.claimed || !st.tasks.eligible,
-      link: !st.tasks.eligible && !st.tasks.claimed ? { to: '/captcha-tasks', text: 'Go to Captcha Tasks' } : null,
+      link: !st.tasks.eligible && !st.tasks.claimed ? { to: '/captcha', text: 'Go to Captcha Tasks' } : null,
     },
     {
       id: 'invite',

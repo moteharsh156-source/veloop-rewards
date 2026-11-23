@@ -14,3 +14,8 @@ body {
   margin: 0 auto;
   padding: 24px 16px;
 }
+
+/* page transition */
+.pageEnter { animation: pageIn 0.4s ease-out both; }
+@keyframes pageIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .pageEnter { animation: none; } }
